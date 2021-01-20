@@ -3,9 +3,9 @@ FROM python:3.7-slim
 RUN apt update 
 RUN apt -y upgrade 
 RUN apt install -y build-essential
-RUN apt install -y supervisor 
+# RUN apt install -y supervisor 
 
-RUN echo "files = /etc/supervisor/conf.d/*.ini" >> /etc/supervisor/supervisord.conf
+# RUN echo "files = /etc/supervisor/conf.d/*.ini" >> /etc/supervisor/supervisord.conf
 
 ADD requirements.txt /tmp/requirements.txt
 RUN pip install -r /tmp/requirements.txt
@@ -35,5 +35,5 @@ ADD config.py /home/${user}/src
 # USER root
 # RUN chmod -R a+rw /home/${user}/src/telegram/log/
 
-# CMD ["sh", "/home/genesis/src/genesis-gunicorn.sh"]
-CMD ["supervisord","--nodaemon","-c", "/etc/supervisor/supervisord.conf"]
+CMD ["sh", "/home/genesis/src/genesis-gunicorn.sh"]
+# CMD ["supervisord","--nodaemon","-c", "/etc/supervisor/supervisord.conf"]
