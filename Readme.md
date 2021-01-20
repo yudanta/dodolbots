@@ -70,3 +70,7 @@ The simple testing script are available on ```app/tests``` directory, to make it
 
 ## Online demo
 online demo might be available for this project, let me update later :)
+
+online demo is available via heroku, can be accesed via this url: https://dodolbot.herokuapp.com/
+
+ps. since it's a free package of heroku so the access may a bit slow hehe... hehe...
