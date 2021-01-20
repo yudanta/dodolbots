@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>DodolBots, bukan jual makanan tapi chatbot belum lulus</title>
+    <link href="{{ url_for('static', filename='css/bootstrap.min.css')}}" rel="stylesheet" media="screen">
+    <link href="{{ url_for('static', filename='css/application.css') }}" rel="stylesheet" media="screen">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+</head>
+
+<body>
+    <div class="container">
+        <div class="jumbotron">
+            <h1>DodolBots. tau sendiri, kan?</h1>
+            <hr />
+            <p>Pokoknya pepet terus jangan kasih kendor... wkwkwk...</p>
+
+        </div>
+        <form id="input-form" class="form-inline">
+            <!-- <div class="form-group">
+                <input id="input-handle" type="text" class="form-control" placeholder="Your Name" autofocus />
+            </div> -->
+            <div class="form-group">
+                <input id="input-text" type="text" class="form-control" placeholder="Enter chat text here!" autofocus />
+            </div>
+            <button class="btn btn-primary" type="submit">Send</button>
+        </form>
+        <div class="page-header">
+            <h1>Catatan obrolan kita</h1>
+        </div>
+        <div id="chat-text">
+        </div>
+    </div>
+
+    <script type="text/javascript" src="{{ url_for('static', filename='js/jquery-2.0.3.min.js') }}"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/3.0.1/socket.io.min.js"></script>
+    <script type="text/javascript">
+        $(document).ready(function() {
+            namespace = '/dodolbot'
+
+            // init vars 
+            var base_url = location.protocol + '//' + document.domain + ":" + location.port;
+
+            var socket = io.connect(base_url + namespace);
+
+            // when connect register current user 
+            socket.on('connect', function() {
+                socket.emit('register', {})
+            });
+
+            // handle user connect or disconnect
+            socket.on('chat_response', function(msg) {
+                if (msg.type == 'connect') {
+                    $("#chat-text").append("<div class='panel panel-default'><div class='panel-heading'>" + $('<span/>').text(msg.data.response_from).html() + "</div><div class='panel-body'>" + $('<span/>').text(msg.message).html() + "</div></div>");
+                    $("#chat-text").stop().animate({
+                        scrollTop: $('#chat-text')[0].scrollHeight
+                    }, 800);
+                }
+            })
+
+            // handle response from chat response 
+            socket.on('message_response', function(msg) {
+                // console.log(msg)
+                $("#chat-text").append("<div class='panel panel-default'><div class='panel-heading'>" + $('<span/>').text(msg.response.responded_by + " (" + msg.response.systime + ")").html() + "</div><div class='panel-body'>" + $('<span/>').text(msg.response.response_txt).html() + "</div></div>");
+                $("#chat-text").stop().animate({
+                    scrollTop: $('#chat-text')[0].scrollHeight
+                }, 800);
+            });
+
+            $("#input-form").on("submit", function(event) {
+                event.preventDefault();
+                var text = $("#input-text")[0].value;
+                // console.log(text);
+
+                socket.emit('user_send', {
+                    query: text
+                });
+
+                $("#chat-text").append("<div class='panel panel-default'><div class='panel-heading'>" + $('<span/>').text("You").html() + "</div><div class='panel-body'>" + $('<span/>').text(text).html() + "</div></div>");
+                $("#chat-text").stop().animate({
+                    scrollTop: $('#chat-text')[0].scrollHeight
+                }, 800);
+
+                $("#input-text")[0].value = "";
+            });
+        });
+    </script>
+</body>
+
+</html>

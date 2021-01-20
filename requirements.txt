@@ -1,0 +1,12 @@
+Flask
+flask-restplus
+flask_cors
+gunicorn
+requests
+flask-socketio
+eventlet
+python-Levenshtein
+pandas
+xlrd==1.2.0
+openpyxl
+gevent
