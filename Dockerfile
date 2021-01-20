@@ -28,7 +28,7 @@ ADD telegram/ home/${user}/src/telegram/
 ADD config.py /home/${user}/src
 # ADD supervisord-conf/genesisapi.ini /etc/supervisor/conf.d/genesisapi.ini
 # ADD supervisord-conf/telegram.ini /etc/supervisor/conf.d/telegram.ini
-# ADD genesis-gunicorn.sh /home/${user}/src/
+ADD genesis-gunicorn.sh /home/${user}/src/
 
 # EXPOSE 8080
 
