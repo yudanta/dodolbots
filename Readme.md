@@ -57,6 +57,7 @@ curl -X POST "http://localhost:8080/api/v.0.1/dodolbots/getAnswer" -H  "accept: 
 ![](images/dodolbot-api-curl.gif)
 
 or accessing the Web Chat by accessing http://localhost:8080/
+
 ![](images/dodolbot-web-demo.gif)
 
 or by telegram app
