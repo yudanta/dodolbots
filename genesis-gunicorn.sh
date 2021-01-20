@@ -1,1 +1,1 @@
-gunicorn --name 'Dodolbot, Simple Chat App' --chdir /home/genesis/src --timeout 300 -b 0.0.0.0:8080 app:app -k eventlet -w 1 --reload
+gunicorn --name 'Dodolbot, Simple Chat App' --chdir /home/genesis/src --timeout 300 -b 0.0.0.0:$PORT app:app -k eventlet -w 1 --reload

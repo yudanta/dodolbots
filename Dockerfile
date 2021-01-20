@@ -20,19 +20,20 @@ RUN adduser ${user}
 USER ${user}
 RUN mkdir /home/${user}/src
 RUN mkdir /home/${user}/log
+RUN mkdir -p /home/${user}/src/telegram/log
 
 # cp project files 
 ADD app/ /home/${user}/src/app/
 ADD telegram/ home/${user}/src/telegram/
 ADD config.py /home/${user}/src
-ADD supervisord-conf/genesisapi.ini /etc/supervisor/conf.d/genesisapi.ini
-ADD supervisord-conf/telegram.ini /etc/supervisor/conf.d/telegram.ini
-ADD genesis-gunicorn.sh /home/${user}/src/
+# ADD supervisord-conf/genesisapi.ini /etc/supervisor/conf.d/genesisapi.ini
+# ADD supervisord-conf/telegram.ini /etc/supervisor/conf.d/telegram.ini
+# ADD genesis-gunicorn.sh /home/${user}/src/
 
-EXPOSE 8080
+# EXPOSE 8080
 
-USER root
-RUN chmod -R a+rw /home/${user}/src/telegram/log/
+# USER root
+# RUN chmod -R a+rw /home/${user}/src/telegram/log/
 
 # CMD ["sh", "/home/genesis/src/genesis-gunicorn.sh"]
 CMD ["supervisord","--nodaemon","-c", "/etc/supervisor/supervisord.conf"]
